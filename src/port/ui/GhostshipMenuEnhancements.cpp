@@ -231,6 +231,12 @@ void GhostshipMenu::AddMenuEnhancements() {
             "The original game rolls them by about half a degree. "
             "(Takes effect the next time one of those screens is opened.)"));
 
+    AddWidget(path, "Fix Heave-Hos Sinking Through Floor", WIDGET_CVAR_CHECKBOX)
+        .CVar(CVAR_ENHANCEMENT("FixHeaveHoSinkingThroughFloor"))
+        .Options(CheckboxOptions().Tooltip(
+            "Stops Wet-Dry World Heave-Hos from sinking through the floor when water drains past it. "
+            "(Takes effect immediately.)"));
+
     path = { "Enhancements", "Modes", SECTION_COLUMN_1 };
     AddSidebarEntry("Enhancements", path.sidebarName, 1);
     path.column = SECTION_COLUMN_1;
