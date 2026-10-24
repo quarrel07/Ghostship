@@ -182,6 +182,18 @@ void GhostshipMenu::OnInit(const nlohmann::json& initArgs) {
                return ShipCompat::GetWindow()->GetWindowBackend() == Fast::WindowBackend::FAST3D_DXGI_DX11;
            },
             "Not Available on DirectX" } },
+        { DISABLE_FOR_NOT_METAL,
+          { [](disabledInfo& info) -> bool {
+               // Follow the renderer picked in the menu (saved right away, applied on restart), not the
+               // running one, so the HDR options grey out as soon as another renderer is chosen.
+               auto window = ShipCompat::GetWindow();
+               int32_t backend = ShipCompat::GetConfig()->GetInt("Window.Backend.Id", -1);
+               if (!window->IsAvailableWindowBackend(backend)) {
+                   backend = window->GetWindowBackend();
+               }
+               return backend != Fast::WindowBackend::FAST3D_SDL_METAL;
+           },
+            "Available Only on Metal" } },
         { DISABLE_FOR_MATCH_REFRESH_RATE_ON,
           { [](disabledInfo& info) -> bool { return CVarGetInteger(CVAR_SETTING("MatchRefreshRate"), 0); },
             "Match Refresh Rate is Enabled" } },
